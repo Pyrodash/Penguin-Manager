@@ -7,6 +7,17 @@ include 'session.php';
 <!DOCTYPE html>
 <html>
 <head>
+<?php
+
+include '../config.php';
+
+$strUsername = $_SESSION['login_user'];
+
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
+
+$resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strUsername'");
+
+?>
 <meta charset="UTF-8">
 <title>Penguin - Profile</title>
 <link rel="stylesheet" href="css/style.css">
@@ -16,24 +27,40 @@ include 'session.php';
 <div class="overlay">
 <ul>
 <div class="default-li">
-<li><a href="home.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-<li><a href="settings.php"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-<li><a href="search.php"><i class="fa fa-search" aria-hidden="true"></i> Search</a></li>
-<li><a href="glows.php"><i class="fa fa-wrench" aria-hidden="true"></i> Glow Panel</a></li>
+<li><a class="links" href="home.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+<li><a class="links" href="search.php"><i class="fa fa-search" aria-hidden="true"></i> Search</a></li>
 <?php
-if ($_SESSION['isStaff'] == true) { 
+if ($_SESSION['isStaff'] == true) {
 ?>
-<li><a href="moderator.php">Mod Panel</a></li>
+<li><a class="links" href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
-<li><a href="admin.php">Admin Panel</a></li>
+<li><a class="links" href="admin.php">Admin Panel</a></li>
 <?php } } ?>
-<li><a href="store.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Store</a></li>
-<li><a href="server.php"><i class="fa fa-server" aria-hidden="true"></i> Server</a></li>
-<li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+<li><a class="links" href="store.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Store</a></li>
+<li><a class="links" href="server.php"><i class="fa fa-server" aria-hidden="true"></i> Server</a></li>
+<li><a class="links" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 </div>
 <div class="profile-li">
-<li class="profile-li"><a class="active" href="profile.php"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li></li>
-</ul>     
+<li class="profile-li">   <div class="dropdown-content">
+      <a class="test2" href="settings.php"><font color="white"><i class="fa fa-cog" aria-hidden="true"></i> Settings<font></a>
+      <a class="test" href="logout.php"><font color="white"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</font></a>
+    </div><a class="active" href="profile.php"><i class="fa fa-user" aria-hidden="true"></i>
+<?php
+
+include 'config.php';
+
+$strUsername = $_SESSION['login_user'];
+
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
+
+$resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strUsername'");
+
+
+echo ' ' . $arrResults['username'] . '';
+?>
+</a>
+</li></li>
+</ul>  
 
 <div class="login-page">
 <div class="form">
@@ -41,7 +68,7 @@ if ($_SESSION['isStaff'] == true) {
 
 <?php
 
-include '../config.php';
+include 'config.php';
 
 $strUsername = $_SESSION['login_user'];
 
